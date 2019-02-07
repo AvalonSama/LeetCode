@@ -60,10 +60,30 @@ class Solution {
 public:
     int lenLongestFibSubseq(vector<int>& A) {
         int len = A.size();
-        int dp[1005][1005];
-        memset(dp,0,sizeof(dp));
         int ans = 0;
-        
+        int pos,pos1,pos2;
+        int temp,next;
+        for(int i=0;i<len;i++)
+            for(int j=i+1;j<len;j++)
+            {
+                pos1 = i;
+                pos2 = j;
+                temp=0;
+                while(1)
+                {
+                    next = A[pos1]+A[pos2];
+                    pos = lower_bound(A.begin(),A.end(),next)-A.begin();
+                    if(A[pos]==next)
+                    {
+                        pos1 = pos2;
+                        pos2 = pos;
+                        if(temp==0) temp=3;
+                        else temp +=1;
+                    }
+                    else break;
+                }
+                ans = max(ans,temp);
+            }
         return ans;
     }
 };
